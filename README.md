@@ -33,47 +33,6 @@ For detailed documentation, visit our [Documentation Portal](link-to-docs).
 ## Examples
 
 Explore our collection of examples to see MK1 Highlights in action:
-
-1. **Basic Document Processing**
-   - Simple text highlighting
-   - Context extraction
-   - Relevance scoring
-
-2. **Advanced Applications**
-   - Integration with LLM systems
-   - Agent memory implementation
-   - Custom highlighting strategies
-
-3. **Enterprise Solutions**
-   - Large-scale document processing
-   - Multi-document analysis
-   - Performance optimization
-
-## Community and Support
-
-- Join our [Discord Community](link)
-- Visit our [Support Forum](link)
-- Follow us on [Twitter](link)
-- Read our [Blog](link)
-
-## Contributing
-
-We welcome contributions from the community! Whether it's:
-- Reporting bugs
-- Suggesting new features
-- Improving documentation
-- Adding examples
-- Enhancing core functionality
-
-Please read our [Contributing Guidelines](link) before submitting your contributions.
-
-## Resources
-
-- [Technical Blog Posts](link)
-- [Case Studies](link)
-- [Performance Benchmarks](link)
-- [Integration Guides](link)
-
-## License
-
-MK1 Highlights is released under the [appropriate license] License. See the LICENSE file for more details.
+1. [Basic Usage](examples/api_basics.ipynb)
+2. [PDF Chunking and Generation](examples/pdf_chunking_and_generation.ipynb)
+3. [NIAH Tester](examples/niah_test.ipynb)
