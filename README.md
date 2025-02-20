@@ -1,32 +1,25 @@
 # MK1 Highlights
 
-MK1 Highlights is a revolutionary LLM architecture designed to efficiently highlight and extract relevant text from large contexts. This toolkit enables developers to process massive context windows while reducing costs and improving accuracy.
+MK1 Highlights is our API service that retrieves the most relevant source text for any user query. Built on top of our custom large language model (LLM), Highlights is designed to scan large volumes of text quickly while maintaining near-perfect recall. This toolkit provides examples to quickly get up and running.
 
 ## Key Features
 
 ### 🚀 Massive Context Processing
-Process millions of tokens of context in minutes or less at unmatched costs. Unlock the ability to handle large documents efficiently without compromising on performance.
+Process millions of tokens without compromising performance.
 
 ### 🎯 Enhanced Accuracy
-Reduce hallucinations by grounding LLM answers with source text. Our highlighting mechanism ensures responses are firmly anchored in the provided context.
+Reduce hallucinations by grounding LLM answers with source text.
 
 ### 🧠 Agent Memory Integration
-Seamlessly integrate Highlights into agentic workflows to enhance recall and grounding. Give your AI agents reliable memory capabilities for improved performance.
+Seamlessly integrate Highlights into agentic workflows for reliable memory and improved performance.
 
 ### 💰 Cost Optimization
-Slash token costs by distilling relevant text from large contexts, significantly reducing subsequent generation costs.
+Lower token costs by distilling relevant text from large contexts.
 
 ## Prerequisites
 
 To get started with MK1 Highlights, you'll need:
 - An API key (sign up [here](https://mk1.ai/products/highlights))
-
-## Use Cases
-
-- **Document Analysis**: Process large documents and extract key information
-- **Research Assistance**: Quickly identify relevant passages in academic papers
-- **Content Summarization**: Generate accurate summaries based on highlighted content
-- **Agent Enhancement**: Improve AI agent performance with better context awareness
 
 ## Documentation
 
