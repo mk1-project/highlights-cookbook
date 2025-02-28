@@ -1,20 +1,18 @@
 # Highlights API: Enhanced Retrieval Powered by our Custom LLM
 
-Retrieval is crucial for tasks like Retrieval-Augmented Generation (RAG), document search, Q&A, and citation identification. However traditional methods like embedding-based semantic search struggle with retrieval accuracy, especially for nuanced or complex text.
+Retrieval is crucial for tasks like Retrieval-Augmented Generation (RAG), document search, and Q&A. However, for nuanced or complex text found in real-world scenarios, traditional retrieval methods that use vector search often struggle with accuracy.
 
-To address these limitations, we've developed a **specialized LLM optimized specifically for retrieval**. We think of it as an "automatic highlighter," pinpointing key text segments directly within documents using the power of an LLM. It supports context windows **up to 2M tokens**, processes 32K tokens in fractions of a second, and achieves significantly higher accuracy compared to traditional retrieval methods.
+To address these limitations, we've developed a **specialized LLM optimized specifically for retrieval**. Think of it as an "automatic highlighter" that uses the power of an LLM to pinpoint key text segments directly within source material. Key benefits of Highlights includes:
 
-Our Highlights API provides direct access to the model, which can be used:
-
-- In isolation as a pure retrieval tool (e.g., to identify references in large documents).
-
-- Coupled with another LLM for generation tasks, such as in RAG workflows.
-
-- As a memory subsystem in complex agent workflows.
+- **Masive context window** supporting up to 2M tokens
+- **Fast response time** processing 32K tokens in fractions of a second 
+- **Accurate retrieval** achieving near perfect recall on [needle-in-a-haystack tests](examples/niah_test.ipynb) and multi-hop tasks.
+ 
+Our model can be used in isolation as a pure retrieval tool, or coupled with other LLMs for generation or complex agent workflows.
 
 ### Example Use Cases:
 
-- 🚀 **Improve RAG:** Query massive documents (up to 2M tokens) using Highlights and feed results into an LLM for generation.
+- 🚀 **Improve RAG:** Query massive documents (up to 2M tokens) using Highlights and feed results into an LLM for generation. See our [single doc RAG](examples/pdf_chunking_and_generation.ipynb) and [multi doc RAG](examples/pdf_chunking_and_generation.ipynb) examples.
 
 - 🎯 **Reduce hallucinations:** Ground LLM responses with explicit citations.
 
@@ -29,7 +27,7 @@ To get started with MK1 Highlights, you'll need:
 
 ## Examples
 
-Explore our collection of examples to see MK1 Highlights in action:
+Explore our collection of examples to see Highlights in action:
 1. [Basic Usage](examples/api_basics.ipynb)
 2. [PDF Chunking and Generation](examples/pdf_chunking_and_generation.ipynb)
 3. [NIAH Tester](examples/niah_test.ipynb)
