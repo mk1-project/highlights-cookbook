@@ -9,7 +9,6 @@ To overcome these limitations, we've developed a **specialized LLM[^1] optimized
 - **Massive context window** supporting up to 2M tokens.
 - **Flexible chunking** handling chunks as small as single sentences or as large as thousands of tokens—unfeasible with traditional vector search.
 - **Fast response time** processing 32K tokens in fractions of a second.
-- **Accurate retrieval** achieving near perfect recall on [needle-in-a-haystack tests](examples/niah_test.ipynb) and multi-hop tasks.
 
 Think of Highlights as an "automatic highlighter" powered by a custom LLM, efficiently pinpointing crucial text segments from your source material. Our model can be used independently as a pure retrieval solution, or integrated with other LLMs for advanced generative and agent-based workflows.
 
