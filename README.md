@@ -7,7 +7,7 @@ However, traditional retrieval methods, like vector search, often struggle with 
 To overcome these limitations, we've developed a **specialized LLM[^1] optimized explicitly for retrieval tasks**. Our model serves as a seamless, drop-in replacement for the retrieval component in any AI workflow, offering significant advantages:
 
 - **Masive context window** supporting up to 2M tokens.
-- **Flexible chunking** Handles chunks as small as single sentences or as large as thousands of tokens—unfeasible with traditional vector search methods.
+- **Flexible chunking** handling chunks as small as single sentences or as large as thousands of tokens—unfeasible with traditional vector search.
 - **Fast response time** processing 32K tokens in fractions of a second.
 - **Accurate retrieval** achieving near perfect recall on [needle-in-a-haystack tests](examples/niah_test.ipynb) and multi-hop tasks.
 
