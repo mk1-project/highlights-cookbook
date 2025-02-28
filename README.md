@@ -7,7 +7,7 @@ However, traditional retrieval methods, like vector search, often struggle with 
 To overcome these limitations, we've developed a **specialized LLM[^1] optimized explicitly for retrieval tasks**. Our model serves as a seamless, drop-in replacement for the retrieval component in any AI workflow, offering significant advantages:
 
 - **Massive context window** supporting up to 2M tokens.
-- **Flexible chunking** handling chunks as small as single sentences or as large as thousands of tokens—unfeasible with traditional vector search.
+- **Flexible chunking** that handles chunks as small as single sentences or as large as thousands of tokens—unfeasible with traditional vector search.
 - **Fast response time** processing 32K tokens in fractions of a second.
 
 Think of Highlights as an "automatic highlighter" powered by a custom LLM, efficiently pinpointing crucial text segments from your source material. Our model can be used independently as a pure retrieval solution, or integrated with other LLMs for advanced generative and agent-based workflows.
