@@ -1,6 +1,6 @@
 # Highlights API: Enhanced Retrieval Powered by our Custom LLM
 
-Retrieval is crucial for tasks such as document search and question answering. 
+Retrieval is crucial for tasks such as document search and question answering.
 
 However, traditional retrieval methods, like vector search, often struggle with accuracy when dealing with complex, real-world texts. This significantly limits their effectiveness, especially within typical Retrieval-Augmented Generation (RAG) workflows that leverage long-context generation (see [here](https://www.databricks.com/blog/long-context-rag-performance-llms)).
 
