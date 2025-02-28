@@ -15,7 +15,7 @@ Think of Highlights as an "automatic highlighter" powered by a custom LLM, effic
 
 ## Key Use Cases:
 
-- 🚀 **Improve RAG:** Query massive documents (up to 2M tokens) using Highlights and feed results into an LLM for generation. See our [single doc RAG](examples/pdf_chunking_and_generation.ipynb) and [multi doc RAG](examples/pdf_chunking_and_generation.ipynb) examples.
+- 🚀 **Improve RAG:** Query massive documents (up to 2M tokens) using Highlights and feed results into an LLM for generation. See our [single doc RAG](examples/pdf_chunking_and_generation.ipynb) and [multiple doc RAG](examples/pdf_chunking_and_generation.ipynb) examples, which shows a RAG workflow that leverages Highlight's ability to use larger chunks.
 
 - 🎯 **Reduce hallucinations:** Ground LLM responses with explicit citations.
 
