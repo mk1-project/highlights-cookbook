@@ -1,8 +1,8 @@
 # Highlights API: Enhanced Retrieval Powered by our Custom LLM
 
-Retrieval is crucial for tasks like Retrieval-Augmented Generation (RAG), document search, and Q&A. However, for nuanced or complex text found in real-world scenarios, traditional retrieval methods that use vector search often struggle with accuracy.
+Retrieval is crucial for tasks like document search and Q&A. However, for nuanced or complex text found in real-world scenarios, traditional retrieval methods based on vector search often struggle with accuracy.
 
-To address these limitations, we've developed a **specialized LLM optimized specifically for retrieval**. Think of it as an "automatic highlighter" that uses the power of an LLM to pinpoint key text segments directly within source material. Key benefits of Highlights includes:
+To address these limitations, we've developed a **specialized LLM[^1] optimized specifically for retrieval**. Think of it as an "automatic highlighter" that uses the power of an LLM to pinpoint key text segments from the source material. Key benefits of Highlights includes:
 
 - **Masive context window** supporting up to 2M tokens
 - **Fast response time** processing 32K tokens in fractions of a second 
@@ -40,3 +40,5 @@ For detailed documentation, visit our [Documentation Portal](link-to-docs).
 - [API Reference](link)
 - [Best Practices](link)
 - [Examples](link)
+
+[^1]: Our custom LLM is modified from a Llama model.
