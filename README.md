@@ -2,25 +2,31 @@
 
 Retrieval is crucial for tasks such as document search and question answering.
 
-However, traditional retrieval methods, like vector search, often struggle with accuracy when dealing with complex, real-world texts. This significantly limits their effectiveness, especially within typical Retrieval-Augmented Generation (RAG) workflows that leverage long-context generation (see [here](https://www.databricks.com/blog/long-context-rag-performance-llms)).
+However, traditional retrieval methods often struggle with accuracy, especially when handling large, complex, real-world documents. This significantly limits their effectiveness, especially within typical Retrieval-Augmented Generation (RAG) workflows that try to leverage long-context generation (see [Databricks analysis](https://www.databricks.com/blog/long-context-rag-performance-llms)).
 
 To overcome these limitations, we've developed a **specialized LLM[^1] optimized explicitly for retrieval tasks**. Our model serves as a seamless, drop-in replacement for the retrieval component in any AI workflow, offering significant advantages:
 
-- **Massive context window** supporting up to 2M tokens.
-- **Flexible chunking** that handles chunks as small as single sentences or as large as thousands of tokens—unfeasible with traditional vector search.
-- **Fast response time** processing 32K tokens in fractions of a second.
+- **Massive context window**: Efficiently queries documents up to 2M tokens.
+- **Flexible chunking**: Handles text segments ranging from single sentences to thousands of tokens—something traditional vector search methods cannot.
+- **Rapid retrieval**: Processes 32K tokens in fractions of a second, significantly faster and more accurately than conventional methods.
 
 Think of Highlights as an "automatic highlighter" powered by a custom LLM, efficiently pinpointing crucial text segments from your source material. Our model can be used independently as a pure retrieval solution, or integrated with other LLMs for advanced generative and agent-based workflows.
 
-## Key Use Cases:
+![highlights](https://github.com/user-attachments/assets/0396d958-9fee-449f-aacd-4e7454addb22)
 
-- 🚀 **Improve RAG:** Query massive documents (up to 2M tokens) using Highlights and feed results into an LLM for generation. See our [single doc RAG](examples/pdf_chunking_and_generation.ipynb) and [multiple doc RAG](examples/pdf_chunking_and_generation.ipynb) examples, which shows a RAG workflow that leverages Highlight's ability to use larger chunks.
+## Recommended Usage Patterns
 
-- 🎯 **Reduce hallucinations:** Ground LLM responses with explicit citations.
+We invite users to test our workflow (Highlights retrieval + LLM generation) and directly compare it against traditional long-context LLM approaches or their own RAG workflows.
 
-- 💰 **Reduce prompt size:** Distill lengthy prompts and minimize token costs with minimal impact.
+### Documents under 2M tokens
 
-- 🧠 **Flexible memory:** Provide agents access to queryable memory modules for complex workflows.
+- **Direct Q&A / Document Search**: Highlights retrieves relevant information directly, feeding precise context into an LLM for generation. This yields better accuracy and faster responses than standard long-context LLMs or complex RAG systems.
+
+- **Agent Memory**: Agents can leverage Highlights as dynamic memory, querying contextually relevant information on-demand.
+
+### Documents over 2M tokens
+
+- **RAG-like pre-filtering**: First use a lightweight RAG system to reduce documents to a manageable size (128K to 2M tokens). Highlights then seamlessly takes over the retrieval step, replacing traditional vector search and re-ranking methods, improving both accuracy and efficiency.
 
 ## Quickstart
 
