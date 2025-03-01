@@ -59,9 +59,9 @@ class NIAHTester:
         )
 
         # Perform search
-        results = self.client.search_text_chunks(
+        results = self.client.search(
             query=query,
-            text_chunks=haystack,
+            chunk_txts=haystack,
             top_n=1
         )
 
@@ -121,9 +121,9 @@ class PDFProcessor:
         Returns:
             List of most relevant text chunks
         """
-        results = self.highlights_client.search_text_chunks(
+        results = self.highlights_client.search(
             query=query,
-            text_chunks=text_chunks,
+            chunk_txts=text_chunks,
             top_n=top_n
         )
 

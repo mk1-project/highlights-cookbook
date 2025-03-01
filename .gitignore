@@ -27,3 +27,8 @@ wheels/
 # VSCode
 .vscode/
 
+# Environment variables
+.env
+
+# Experimental
+experimental/
