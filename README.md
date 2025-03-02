@@ -1,6 +1,6 @@
 # Highlights API: Enhanced Retrieval Powered by our Custom LLM
 
-Effective retrieval is essential for accurate Q&A and search. However, traditional retrieval methods often struggle with accuracy, especially when handling large, real-world data.
+Effective retrieval is essential for accurate search and Q&A. However, traditional retrieval methods often struggle with accuracy, especially when handling large, real-world data.
 
 To overcome these limitations, we've developed **Highlights**, a specialized LLM[^1] optimized explicitly for retrieval tasks. We like to think of it as an "automatic highlighter", efficiently pinpointing key text segments using the power of an LLM.
 
@@ -24,7 +24,7 @@ When querying a large document, a promising approach is to simply use a long con
 
 We can solve this by first sending the large document to Highlights, which nativelty supports millions of tokens. Highlights then extracts the relevant sections and the results can be sent directly to another LLM for generation. The entire process improves on speed (>10x) and cost compared to sending the entire document to frontier LLM. 
 
-[Try Single-Document Q&A on a Large SEC Filing →](examples/pdf_chunking_and_generation.ipynb)
+[Try Single-Document Search on a Large Document (Border Act) →](examples/single_doc_search.ipynb)
 
 ### Search with a Multiple Documents (<2M total tokens)
 
@@ -32,7 +32,7 @@ When querying across multiple documents, a commmon approach is to concatenate al
 
 Highlights again is an attractive option. Our Highlights API supports multiple documents by including document metadata to each returned text chunk. Furthermore, with its ability to support 2M total tokens, Q&A can extend well beyond the limitations of most frontier models.
 
-[Try Multi-Document Q&A →](examples/multi_doc_search.ipynb)
+[Try Multi-Document Search →](examples/multi_doc_search.ipynb)
 
 ### Search using RAG (>2M total tokens)
 
@@ -40,21 +40,37 @@ Q&A that extends beyond 2M tokens typically requires a sophisticated RAG system 
 
 With Highlights, the RAG system becomes significantly simpler: All we need is a lightweight pre-filtering stage whose only task is to reduce the documents to manageable size (128K to 2M tokens). Then, these results can plug directly into the same pipeline as described above.
 
-## Prerequisites
+## QuickStart
 
-To get started with MK1 Highlights, you'll need:
-- An API key (sign up [here](https://mk1.ai/products/highlights))
+To get started with MK1 Highlights, you'll need an API key (sign up [here](https://mk1.ai/products/highlights)).
+
+Then you can simply post to the Highlights API:
+
+```
+curl -X POST "https://api.highlights.mk1.ai/distributor/search" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: YOUR-API-KEY" \
+  -d '{
+    "query": "What is machine learning?",
+    "chunk_txts": [
+      "Machine learning models can process vast amounts of data quickly.",
+      "Natural language processing helps computers understand human language.",
+      "Deep learning is a subset of machine learning based on neural networks.",
+      "Data science combines statistics, programming, and domain expertise."
+    ],
+    "top_n": 2,
+    "true_order": true
+  }'
+```
+
+For detailed documentation, visit our [docs](https://docs.mk1.ai/highlights/highlights_api.html).
 
 ## Examples
 
 Explore our collection of examples to see Highlights in action:
 1. [Basic Usage](examples/api_basics.ipynb)
-2. [Single Doc Search](examples/pdf_chunking_and_generation.ipynb)
+2. [Single Doc Search](examples/single_doc_search.ipynb)
 3. [Multiple Doc Search](examples/multi_doc_search.ipynb)
 3. [NIAH Tester](examples/niah_test.ipynb)
-
-## Documentation
-
-For detailed documentation, visit our [docs](https://docs.mk1.ai/highlights/highlights_api.html).
 
 [^1]: Our custom LLM is modified from a Llama model.
