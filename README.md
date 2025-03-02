@@ -22,7 +22,7 @@ Below are simple examples showing how Highlights can integrate into your existin
 
 When querying a large document, a promising approach is to simply use a long context LLM. However, popular frontier models may not fit the entire document in its context window, and also struggle with precision issues (e.g. they fail needle-in-a-haystack tests).
 
-We can solve this by first sending the large document to Highlights, which nativelty supports millions of tokens. Highlights then extracts the relevant sections and the results can be sent directly to another LLM for generation. The entire process improves on speed (>10x) and cost compared to sending the entire document to a frontier LLM. 
+We can solve this by first sending the large document to Highlights, which nativelty supports millions of tokens. Highlights then extracts the relevant sections and the results are sent directly to another LLM for generation. The entire process improves on speed (>10x) and cost compared to sending the entire document to a frontier LLM. 
 
 [Try Single-Document Search on a Large Document (Border Act) →](examples/single_doc_search.ipynb)
 
