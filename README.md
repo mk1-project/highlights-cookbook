@@ -1,6 +1,6 @@
 # Highlights API: Enhanced Retrieval Powered by our Custom LLM
 
-Effective retrieval is essential for accurate search and Q&A. However, traditional retrieval methods often struggle with accuracy, especially when handling large, real-world data.
+Effective retrieval is essential for accurate search and Q&A. However, traditional retrieval methods often struggle with accuracy, especially when handling large documents and the complexity of real-world data.
 
 To overcome these limitations, we've developed **Highlights**, a specialized LLM[^1] optimized explicitly for retrieval tasks. We like to think of it as an "automatic highlighter", efficiently pinpointing key text segments using the power of an LLM.
 
@@ -18,17 +18,17 @@ Highlights can function independently as a dedicated retrieval module or seamles
 
 Below are simple examples showing how Highlights can integrate into your existing workflows. We encourage you to experiment with these examples on your own data.
 
-### Search with a Single Large Document
+### Single Large Document Search
 
 When querying a large document, a promising approach is to simply use a long context LLM. However, popular frontier models may not fit the entire document in its context window, and also struggle with precision issues (e.g. they fail needle-in-a-haystack tests).
 
-We can solve this by first sending the large document to Highlights, which nativelty supports millions of tokens. Highlights then extracts the relevant sections and the results can be sent directly to another LLM for generation. The entire process improves on speed (>10x) and cost compared to sending the entire document to frontier LLM. 
+We can solve this by first sending the large document to Highlights, which nativelty supports millions of tokens. Highlights then extracts the relevant sections and the results can be sent directly to another LLM for generation. The entire process improves on speed (>10x) and cost compared to sending the entire document to a frontier LLM. 
 
 [Try Single-Document Search on a Large Document (Border Act) →](examples/single_doc_search.ipynb)
 
-### Search with a Multiple Documents (<2M total tokens)
+### Multiple Document Search (<2M total tokens)
 
-When querying across multiple documents, a commmon approach is to concatenate all the documents and marking their boundaries via prompting, and sending to a long context LLM. However this approach suffers the same drawbacks as previously described, and quickly becomes infeasible with the 200K token limit of popular frontier models.
+When querying across multiple documents, a commmon approach is to concatenate all the documents, mark document boundaries via prompting, and send the prompt and query to a long context LLM. However this approach suffers the same drawbacks as previously described, and quickly becomes infeasible with the 200K token limit of popular frontier models.
 
 Highlights again is an attractive option. Our Highlights API supports multiple documents by including document metadata to each returned text chunk. Furthermore, with its ability to support 2M total tokens, Q&A can extend well beyond the limitations of most frontier models.
 
@@ -36,9 +36,9 @@ Highlights again is an attractive option. Our Highlights API supports multiple d
 
 ### Search using RAG (>2M total tokens)
 
-Q&A that extends beyond 2M tokens typically requires a sophisticated RAG system that includes vector search, re-ranking, and complex prompting techniques.
+Search that extends beyond 2M tokens typically requires a sophisticated RAG system that includes vector search, re-ranking, and complex prompting techniques.
 
-With Highlights, the RAG system becomes significantly simpler: All we need is a lightweight pre-filtering stage whose only task is to reduce the documents to manageable size (128K to 2M tokens). Then, these results can plug directly into the same pipeline as described above.
+With Highlights, the RAG system can be significantly simplified: All we need is a lightweight pre-filtering stage whose only task is to reduce the documents to manageable size (128K to 2M tokens). Then, these results can plug directly into the same pipeline as described above.
 
 ## QuickStart
 
