@@ -1,32 +1,51 @@
 # Highlights API: Enhanced Retrieval Powered by our Custom LLM
 
-Retrieval is important for tasks such as document search and question answering.
+Retrieval is central to Q&A and document search. However, traditional retrieval methods are often limited and struggle with accuracy—especially when handling large, real-world documents.
 
-However, traditional retrieval methods often struggle with accuracy, especially when handling large, complex, real-world documents. This significantly limits their effectiveness, especially for typical Retrieval-Augmented Generation (RAG) workflows that try to combine retrieval with long-context LLMs (see [Databricks analysis](https://www.databricks.com/blog/long-context-rag-performance-llms)).
+To overcome these limitations, we've developed **Highlights**, a specialized LLM[^1] optimized explicitly for retrieval tasks. We like to think of it as an "automatic highlighter", efficiently pinpointing key text segments using the power of an LLM.
 
-To overcome these limitations, we've developed a **specialized LLM[^1] optimized explicitly for retrieval tasks**. Our model serves as a drop-in replacement for the retrieval component in many AI workflows, offering significant advantages:
+<img width="864" alt="highlights-2" src="https://github.com/user-attachments/assets/40825619-dd89-4be8-978c-7d49bf8bc270" />
+
+Key features of Highights:
 
 - **Massive context window**: Efficiently queries documents up to 2M tokens.
-- **Flexible chunking**: Handles text segments ranging from single sentences to thousands of tokens—something traditional vector search methods cannot.
-- **Rapid retrieval**: Processes 32K tokens in fractions of a second, significantly faster and more accurately than conventional methods.
+- **Flexible chunking**: Handles text segments ranging from single sentences to thousands of tokens, scoring each segment _in context_—unlike traditional vector search approaches. 
+- **Rapid retrieval**: Processes 32K tokens in fractions of a second, significantly faster than using a long context LLM.
 
-We like to think of it as an "automatic highlighter", efficiently pinpointing crucial text segments using the power of an LLM. Our solution can be used independently as a pure retrieval solution, or integrated with other LLMs for advanced generative and agent-based workflows.
-
-![highlights](https://github.com/user-attachments/assets/0396d958-9fee-449f-aacd-4e7454addb22)
+Highlights can be used independently as a pure retrieval module, or integrated with other LLMs for advanced generative and agent-based workflows. 
 
 ## Recommended Usage Patterns
 
-We invite users to test our workflow (Highlights retrieval + LLM generation) and directly compare it against traditional long-context LLM approaches or their own RAG workflows. 
+We have prepared simple examples to show how Highlights can be seamlessly integrated into Q&A workflows. We invite you to try these on your own data and compare against your internal workflows.
 
-### Documents under 2M tokens
+### Q&A with a Single Large Document
 
-- **Direct Q&A / Document Search**: Highlights retrieves relevant information directly, feeding precise context into an LLM for generation. This yields better accuracy and faster responses than standard long-context LLMs or complex RAG systems.
+Consider querying a large document with somewhere between 128K to 2M tokens. A common method is to simply load the document into the context of an LLM. However this method has a number of drawbacks:
 
-- **Agent Memory**: Agents can leverage Highlights as dynamic memory, querying contextually relevant information on-demand.
+- Many frontier models have a limited context window that can not fit the entire document.
+- Long context frontier models suffer from blindspots, e.g. Needle In A Haystack issues that can lead to inaccuracies.
+- The cost of using long context LLMs can be high, where you have to pay for input tokens for each query.
 
-### Documents over 2M tokens
+Highlights solves these issues:
+- 🚀 Highlights natively supports millions of tokens.
+- 🎯 Our internal tests show Highlights has more accurate recall for Q&A.
+- 💰 With our custom optimized model, Highlights is both faster and less expensive than using long context (up to 16x).
 
-- **RAG-like pre-filtering**: First use a lightweight RAG system to reduce documents to a size compatible with Highlights (128K to 2M tokens). Highlights then seamlessly takes over the retrieval step, replacing traditional vector search and re-ranking methods, improving both accuracy and efficiency.
+Try out single-doc Q&A using Highlight on a large SEC filing using Highlights here.
+
+### Q&A with a Multiple Documents (<2M total tokens)
+
+To support multiple documents, a commmon approach is to simply concatenate all the documents (with marked boundaries) and sending to a long context LLM. However this approach suffers the same drawbacks as previously described, and quickly becomes infeasible as many frontier models have context windows less than 200K tokens.
+
+Highlights again is an attractive option. In particular, we can easily support multiple documents by including document metadata to each returned text chunk. Furthermore, the ability to support 2M total tokens allows Q&A to extend well beyond the limitations of many frontier models.
+
+Try out multi-doc Q&A here.
+
+### Integration to RAG-like workflows
+
+Q&A that extends beyond 2M tokens often requires more sophisticated RAG systems that includes vector search, re-ranking, complex prompting techniques. In these cases, long context LLMs hold promise but also pose challenges (see [Databricks analysis](https://www.databricks.com/blog/long-context-rag-performance-llms)).
+
+Highlights offers a simpler approach. We can use a lightweight RAG system to reduce documents to a size compatible with Highlights (128K to 2M tokens), and then use the methods above for the final retrieval and generation step. 
 
 ## Quickstart
 
