@@ -8,7 +8,7 @@ To overcome these limitations, we've developed **Highlights**, a specialized LLM
 
 ## Key features:
 
-- **Massive context window**: Efficiently queries documents up to 2M tokens.
+- **Massive context window**: Supports queries on source text up to 2M tokens.
 - **Flexible chunking**: Handles text segments ranging from single sentences to thousands of tokens, scoring each segment _in context_—unlike traditional vector search approaches. 
 - **Rapid retrieval**: Processes up to 32K tokens in fractions of a second, significantly faster and more cost-effective than conventional long-context LLM approaches.
 
