@@ -30,15 +30,15 @@ We can solve this by first sending the large document to Highlights, which nativ
 
 When querying across multiple documents, a commmon approach is to concatenate all the documents, mark document boundaries via prompting, and send the prompt and query to a long context LLM. However this approach suffers the same drawbacks as previously described, and quickly becomes infeasible with the 200K token limit of popular frontier models.
 
-Highlights again is an attractive option. Our Highlights API supports multiple documents by including document metadata to each returned text chunk. Furthermore, with its ability to support 2M total tokens, Q&A can extend well beyond the limitations of most frontier models.
+Highlights again is an attractive option. Our Highlights API supports multiple documents by including document metadata to each returned text chunk. Furthermore, with its ability to support 2M total tokens, queries can extend beyond the context limitations of most frontier models.
 
 [Try Multi-Document Search →](examples/multi_doc_search.ipynb)
 
 ### Search using RAG (>2M total tokens)
 
-Search that extends beyond 2M tokens typically requires a sophisticated RAG system that includes vector search, re-ranking, and complex prompting techniques.
+Search that extends beyond 2M tokens typically requires sophisticated RAG workflows that includes vector search, re-ranking, and complex prompting techniques.
 
-With Highlights, the RAG system can be significantly simplified: All we need is a lightweight pre-filtering stage whose only task is to reduce the documents to manageable size (128K to 2M tokens). Then, these results can plug directly into the same pipeline as described above.
+With Highlights, RAG can be significantly simplified: All we need is a lightweight pre-filtering stage whose only task is to reduce the documents to manageable size (128K to 2M tokens). Then, this reduced document set can plug directly into the same pipeline as described above.
 
 ## QuickStart
 
