@@ -24,7 +24,7 @@ When querying a large document, a promising approach is to simply use a long con
 
 We can solve this by first sending the large document to Highlights, which natively supports millions of tokens. Highlights then extracts the relevant sections and the results are sent directly to another LLM for generation. The entire process improves on speed (>10x) and cost compared to sending the entire document to a frontier LLM. 
 
-[Try Single-Document Search on a Large Document (Border Act) →](examples/single_doc_search.ipynb)
+[Try Single-Document Search on Uber 10K filing →](examples/single_doc_search.ipynb)
 
 ### Multiple Document Search (<2M total tokens)
 
