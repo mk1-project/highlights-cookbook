@@ -1,5 +1,8 @@
 from typing import Tuple, List
 from base_client import HighlightsClient
+from datasets import load_dataset
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 import random
 import openai
 import PyPDF2
@@ -11,7 +14,8 @@ class NIAHTester:
     def generate_test_data(
         self,
         needle: str,
-        num_haystack_items: int = 100
+        haystack: str,
+        needle_position: int = None,
     ) -> Tuple[List[str], int]:
         """
         Generate test data with a needle hidden in a haystack.
@@ -23,23 +27,37 @@ class NIAHTester:
         Returns:
             Tuple of (list of text chunks, index of needle)
         """
-        # Generate distractor texts
-        haystack = [
-            f"Distractor text number {i}: This is irrelevant content."
-            for i in range(num_haystack_items)
-        ]
+        chunk_size = 1024
+        splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=0)
+        haystack_chunks = splitter.split_text(haystack)
 
-        # Insert needle at random position
-        needle_position = random.randint(0, len(haystack))
-        haystack.insert(needle_position, needle)
+        # Insert needle at random position or at specified position
+        if needle_position is None:
+            # Choose random chunk and position
+            chunk_idx = random.randint(0, len(haystack_chunks) - 1)
+            chunk_text = haystack_chunks[chunk_idx]
+            insert_position = random.randint(0, len(chunk_text) - len(needle))
 
-        return haystack, needle_position
+            # Insert needle and calculate absolute position
+            haystack_chunks[chunk_idx] = f"{chunk_text[:insert_position]}{needle}{chunk_text[insert_position:]}"
+            needle_position = chunk_idx * chunk_size + insert_position
+        else:
+            # Calculate chunk and position from absolute position
+            chunk_idx = needle_position // chunk_size
+            insert_position = needle_position % chunk_size
+            chunk_text = haystack_chunks[chunk_idx]
+
+            # Insert needle at specified position
+            haystack_chunks[chunk_idx] = f"{chunk_text[:insert_position]}{needle}{chunk_text[insert_position:]}"
+
+        return haystack_chunks
 
     def run_test(
         self,
         needle: str,
         query: str,
-        num_haystack_items: int = 100
+        haystack: str,
+        needle_position: int = None,
     ) -> dict:
         """
         Run a needle-in-haystack test.
@@ -53,9 +71,10 @@ class NIAHTester:
             Dictionary containing test results
         """
         # Generate test data
-        haystack, true_position = self.generate_test_data(
+        haystack = self.generate_test_data(
             needle=needle,
-            num_haystack_items=num_haystack_items
+            haystack=haystack,
+            needle_position=needle_position
         )
 
         # Perform search
@@ -65,17 +84,23 @@ class NIAHTester:
             top_n=1
         )
 
-        print(results["results"])
+        success = False
+        matching_chunk = None
         if results["results"]:
-            found_text = results["results"][0]['chunk_txt']
-            if found_text.strip() == needle.strip():
-                success = True
-            else:
-                success = False
+            # Check if needle is in first result for success metric
+            first_chunk = results["results"][0]['chunk_txt']
+            success = needle.strip() in first_chunk.strip()
+
+            # Find which chunk actually contains the needle
+            for result in results["results"]:
+                chunk_text = result['chunk_txt']
+                if needle.strip() in chunk_text.strip():
+                    matching_chunk = chunk_text
+                    break
 
         return {
             "success": success,
-            "true_position": true_position,
+            "matching_chunk": matching_chunk,
             "total_chunks": len(haystack),
             "metadata": results.get("metadata", {})
         }
