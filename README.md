@@ -18,17 +18,17 @@ Highlights can function independently as a dedicated retrieval module or seamles
 
 Below are simple examples showing how Highlights can integrate into your existing workflows. We encourage you to experiment with these examples on your own data.
 
-### Single Large Document Search
+### Single Document Search
 
 When querying a large document, a promising approach is to simply use a long context LLM. However, popular frontier models may not fit the entire document in its context window, and also struggle with precision issues (e.g. they fail needle-in-a-haystack tests).
 
-We can solve this by first sending the large document to Highlights, which nativelty supports millions of tokens. Highlights then extracts the relevant sections and the results are sent directly to another LLM for generation. The entire process improves on speed (>10x) and cost compared to sending the entire document to a frontier LLM. 
+We can solve this by first sending the large document to Highlights, which natively supports millions of tokens. Highlights then extracts the relevant sections and the results are sent directly to another LLM for generation. The entire process improves on speed (>10x) and cost compared to sending the entire document to a frontier LLM. 
 
 [Try Single-Document Search on a Large Document (Border Act) →](examples/single_doc_search.ipynb)
 
 ### Multiple Document Search (<2M total tokens)
 
-When querying across multiple documents, a commmon approach is to concatenate all the documents, mark document boundaries via prompting, and send the prompt and query to a long context LLM. However this approach suffers the same drawbacks as previously described, and quickly becomes infeasible with the 200K token limit of popular frontier models.
+When querying across multiple documents, a common approach is to concatenate all the documents, mark document boundaries via prompting, and send the prompt and query to a long context LLM. However this approach suffers the same drawbacks as previously described, and quickly becomes infeasible with the 200K token limit of popular frontier models.
 
 Highlights again is an attractive option. Our Highlights API supports multiple documents by including document metadata to each returned text chunk. Furthermore, with its ability to support 2M total tokens, queries can extend beyond the context limitations of most frontier models.
 
@@ -38,7 +38,7 @@ Highlights again is an attractive option. Our Highlights API supports multiple d
 
 Search that extends beyond 2M tokens typically requires sophisticated RAG workflows that includes vector search, re-ranking, and complex prompting techniques.
 
-With Highlights, RAG can be significantly simplified: All we need is a lightweight pre-filtering stage whose only task is to reduce the documents to manageable size (128K to 2M tokens). Then, this reduced document set can plug directly into the same pipeline as described above.
+With Highlights, RAG can be significantly simplified: All we need is a lightweight pre-filtering stage whose only task is to reduce the documents to manageable size (128K to 2M tokens) of relevant segments. Then, this reduced document set can plug directly into the same pipeline as described above.
 
 ## QuickStart
 
