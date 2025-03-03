@@ -1,6 +1,5 @@
 from typing import Tuple, List
 from base_client import HighlightsClient
-from datasets import load_dataset
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 import random
@@ -15,7 +14,7 @@ class NIAHTester:
         self,
         needle: str,
         haystack: str,
-        needle_position: int = None,
+        needle_position: int
     ) -> Tuple[List[str], int]:
         """
         Generate test data with a needle hidden in a haystack.
@@ -31,24 +30,40 @@ class NIAHTester:
         splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=0)
         haystack_chunks = splitter.split_text(haystack)
 
-        # Insert needle at random position or at specified position
-        if needle_position is None:
-            # Choose random chunk and position
-            chunk_idx = random.randint(0, len(haystack_chunks) - 1)
-            chunk_text = haystack_chunks[chunk_idx]
-            insert_position = random.randint(0, len(chunk_text) - len(needle))
+        # Calculate chunk and position from absolute position
+        # Find which chunk contains the needle position by summing lengths
+        chunk_idx = 0
+        pos_sum = 0
+        for i, chunk in enumerate(haystack_chunks):
+            if pos_sum + len(chunk) > needle_position:
+                chunk_idx = i
+                insert_position = needle_position - pos_sum
+                chunk_text = chunk
+                break
+            pos_sum += len(chunk)
 
-            # Insert needle and calculate absolute position
-            haystack_chunks[chunk_idx] = f"{chunk_text[:insert_position]}{needle}{chunk_text[insert_position:]}"
-            needle_position = chunk_idx * chunk_size + insert_position
+        # Try to split by periods first
+        chunk_split = haystack_chunks[chunk_idx].split(". ")
+
+        if len(chunk_split) == 1:  # No periods found
+            # Direct insertion at calculated position
+            chunk_text = haystack_chunks[chunk_idx]
+            before = chunk_text[:insert_position]
+            after = chunk_text[insert_position:]
+            haystack_chunks[chunk_idx] = before + needle + after
         else:
-            # Calculate chunk and position from absolute position
-            chunk_idx = needle_position // chunk_size
-            insert_position = needle_position % chunk_size
-            chunk_text = haystack_chunks[chunk_idx]
+            # Find the best split position closest to insert_position
+            current_pos = 0
+            best_split_idx = 0
+            for i, sentence in enumerate(chunk_split):
+                if current_pos + len(sentence) > insert_position:
+                    best_split_idx = i
+                    break
+                current_pos += len(sentence)
 
-            # Insert needle at specified position
-            haystack_chunks[chunk_idx] = f"{chunk_text[:insert_position]}{needle}{chunk_text[insert_position:]}"
+            # Reconstruct the chunk with the needle inserted between sentences
+            chunk_split[best_split_idx] = needle + chunk_split[best_split_idx]
+            haystack_chunks[chunk_idx] = ". ".join(chunk_split)
 
         return haystack_chunks
 
@@ -57,7 +72,7 @@ class NIAHTester:
         needle: str,
         query: str,
         haystack: str,
-        needle_position: int = None,
+        needle_position: int,
     ) -> dict:
         """
         Run a needle-in-haystack test.
@@ -86,23 +101,26 @@ class NIAHTester:
 
         success = False
         matching_chunk = None
+        matching_chunk_position = None
         if results["results"]:
             # Check if needle is in first result for success metric
             first_chunk = results["results"][0]['chunk_txt']
             success = needle.strip() in first_chunk.strip()
 
             # Find which chunk actually contains the needle
-            for result in results["results"]:
+            for i, result in enumerate(results["results"]):
                 chunk_text = result['chunk_txt']
                 if needle.strip() in chunk_text.strip():
                     matching_chunk = chunk_text
+                    matching_chunk_position = i
                     break
 
         return {
             "success": success,
             "matching_chunk": matching_chunk,
             "total_chunks": len(haystack),
-            "metadata": results.get("metadata", {})
+            "metadata": results.get("metadata", {}),
+            "matching_chunk_position": matching_chunk_position
         }
 
 class PDFProcessor:
