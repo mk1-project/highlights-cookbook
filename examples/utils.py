@@ -2,13 +2,12 @@ from typing import Tuple, List
 from base_client import HighlightsClient
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-import random
 import openai
 import PyPDF2
 
 class NIAHTester:
-    def __init__(self, api_key: str):
-        self.client = HighlightsClient(api_key=api_key)
+    def __init__(self, highlights_client: HighlightsClient):
+        self.highlights_client = highlights_client
 
     def generate_test_data(
         self,
@@ -93,7 +92,7 @@ class NIAHTester:
         )
 
         # Perform search
-        results = self.client.search(
+        results = self.highlights_client.search(
             query=query,
             chunk_txts=haystack,
             top_n=1
